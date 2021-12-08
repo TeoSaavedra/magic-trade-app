@@ -36,7 +36,10 @@ services:
       - ./server:/usr/src/app
       - /usr/src/app/node_modules
   client:
-    build: ./client
+    build:
+      context: ./client
+      args: 
+        - REACT_APP_API_BASE_URL=$CLIENT_API_BASE_URL
     restart: unless-stopped
     env_file:
       - ./.env

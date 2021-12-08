@@ -23,7 +23,7 @@ class UserDropdown extends Component {
                 </form>
                 <div className="dropdown-divider"></div>
                 <Link className="dropdown-item" to="/singup">Regístrate Aquí</Link>
-                <a className="dropdown-item" href="#">Forgot password?</a>
+                <a className="dropdown-item" href="/">Forgot password?</a>
             </div>
         );
     }

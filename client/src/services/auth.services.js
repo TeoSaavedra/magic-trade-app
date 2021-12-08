@@ -28,10 +28,10 @@ class AuthService {
   }
 
   checkmail(email) {
-      return axios.get(API_URL + "/email", { email })
-      .then((response) => {
-        return response.data;
-      });
+    return axios.get(API_URL + "auth/verify", { email })
+    .then((response) => {
+      return response.data;
+    });
   }
 }
 
