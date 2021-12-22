@@ -1,11 +1,9 @@
-import axios from "axios";
-
-const API_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080/api';
+import api from "./index";
 
 class AuthService {
   login(username, password) {
-    return axios
-      .post(API_URL + "signin", { username, password })
+    return api
+      .post("signin", { username, password })
       .then((response) => {
         if (response.data.accessToken) {
           localStorage.setItem("user", JSON.stringify(response.data));
@@ -19,19 +17,14 @@ class AuthService {
     localStorage.removeItem("user");
   }
 
-  register(username, email, password) {
-    return axios.post(API_URL + "/signup", {
-      username,
+  register(userData) {
+    const {firstname,lastname,email,password} = userData
+    return api.post("/auth/signup", {
+      firstname,
+      lastname,
       email,
       password,
-    });
-  }
-
-  checkmail(email) {
-    return axios.get(API_URL + "auth/verify", { email })
-    .then((response) => {
-      return response.data;
-    });
+    })
   }
 }
 

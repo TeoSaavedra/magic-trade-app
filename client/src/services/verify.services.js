@@ -1,8 +1,8 @@
-import http from "./index";
+import api from "./index";
 
 class VerifyService {
-  checkmail(email) {
-    return http.get("/auth/verify", {
+  checkEmail(email) {
+    return api.get("/auth/check", {
       params: {
         email: email
       }
