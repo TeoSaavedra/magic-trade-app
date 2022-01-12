@@ -8,6 +8,9 @@ class VerifyService {
       }
     });
   }
+  verifyUser(hash) {
+    return api.post("/auth/verify",{ hash })
+  }
 }
 
 export default new VerifyService();

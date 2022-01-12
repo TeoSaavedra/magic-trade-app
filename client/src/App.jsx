@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
-import { Routes, Route } from "react-router-dom";
+import React, { Component } from 'react'
+import { Routes, Route } from "react-router-dom"
 
-import NavBar from "./components/navbar.component";
-import Signup from "./components/fragments/signup.fragment";
-import FlashMessageList from './components/flashmessages/flashmessagelist.component';
+import NavBar from "./components/navbar.component"
+import Signup from "./components/fragments/signup.fragment"
+import FlashMessageList from './components/flashmessages/flashmessagelist.component'
+import Verify from './components/verify.component'
 
-import './App.css';
+import './App.css'
  
 class App extends Component {
 
@@ -17,6 +18,7 @@ class App extends Component {
                 <div>
                     <Routes>
                         <Route path="/singup" element={<Signup/>}/>
+                        <Route path="/verify/:hash" element={<Verify/>}/>
                     </Routes>
                 </div>
             </div>

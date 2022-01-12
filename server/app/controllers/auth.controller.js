@@ -7,6 +7,7 @@ const Role = db.role
 const Op = db.Sequelize.Op
 
 const sendVerificationEmail = require("../helper/mail.helper")
+const base64 = require("../helper/base64.helper")
 
 exports.checkEmail = (req, res) => {
     User.findOne({
@@ -49,16 +50,51 @@ exports.signup = (req, res) => {
                 }
             }).then(roles => {
                 user.setRoles(roles).then(() => {
-                    res.send({ message: "El usuario fue registrado exitosamente!" })
+                    res.send({ message: "El usuario fue registrado exitosamente! Revisa tu e-mail para verificar tu cuenta" })
                 })
             })
         } else {
             user.setRoles([1]).then(() => {
-                res.send({ message: "El usuario fue registrado exitosamente!" })
+                res.send({ message: "El usuario fue registrado exitosamente! Revisa tu e-mail para verificar tu cuenta" })
+            })
+        
+        }
+        const code = base64.encode(user)
+        sendVerificationEmail(req.body.email, code)
+    })
+    .catch(err => {
+        res.status(500).send({ message: err.message })
+    })
+}
+
+exports.verifyUser = (req, res) => {
+    const code = base64.decode(req.body.hash)
+    const id = code.split('@')[0]
+    User.findByPk(id)
+    .then( user => {
+        console.log("USER FIND")
+        if (user) {
+            if (user.active) {
+                return res.status(200).send({
+                    status: "fail",
+                    message: "El usuario ya fue verificado!"
+                })
+            }
+            user.active = true
+            return user.save().then( () => {
+                res.status(200).send({
+                    status: "success",
+                    message: "El usuario fue verificado exitosamente!"
+                })
+            })
+            .catch(err => {
+                res.status(500).send({ message: err.message })
             })
         }
-        console.log(user);
-        // sendVerificationEmail(req.body.email,bcrypt.encodeBase64(user.id + ))
+        res.status(200).send({
+            status: "fail",
+            message: "El usuario no fue verificado!"
+        })
     })
     .catch(err => {
         res.status(500).send({ message: err.message })

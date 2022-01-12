@@ -9,9 +9,9 @@ module.exports = function(app) {
             "x-access-token, Origin, Content-Type, Accept"
         );
         next();
-    });
+    })
 
-    app.get("/api/auth/check", controller.checkEmail);
+    app.get("/api/auth/check", controller.checkEmail)
 
     app.post(
         "/api/auth/signup", 
@@ -20,7 +20,8 @@ module.exports = function(app) {
             verifySignUp.checkRolesExisted,
         ],
         controller.signup
-    );
+    )
 
-    // app.get("/api/auth/verify", controller.verify);
+    app.post("/api/auth/verify", controller.verifyUser)
+
 }

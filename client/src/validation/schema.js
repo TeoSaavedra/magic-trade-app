@@ -1,5 +1,5 @@
 import *  as Yup  from 'yup';
-import verifyServices from '../services/verify.services';
+import verifyService from '../services/verify.services';
 
 export const validationSchema = () => {
     return Yup.object().shape({
@@ -13,7 +13,7 @@ export const validationSchema = () => {
         .required('Email es requerido')
         .email('Email es requerido')
         .test("emailExists", "El email ya existe", async (value) => {
-            const response  = await verifyServices.checkEmail(value)
+            const response  = await verifyService.checkEmail(value)
             if (response.data.status === "success") {
                 return true
             } else {
