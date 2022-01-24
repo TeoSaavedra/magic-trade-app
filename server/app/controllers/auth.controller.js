@@ -72,7 +72,6 @@ exports.verifyUser = (req, res) => {
     const id = code.split('@')[0]
     User.findByPk(id)
     .then( user => {
-        console.log("USER FIND")
         if (user) {
             if (user.active) {
                 return res.status(200).send({
